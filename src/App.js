@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import './styles/request.css';
 import RequestForm from './components/requestForm';
-import RequestMap from './components/requestMap'
+import RequestMap from './components/requestMap';
+import ParcelDetails from './components/parcelDetails';
 import axios from 'axios';
+import { Shimmer } from 'react-shimmer'
 
 const App = () => {
-const [location, setLocation] = useState([9.117, 8.674]);
-const [place, setPlace] = useState("")
+const [location, setLocation] = useState([]);
+const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // get user current location
@@ -17,11 +19,9 @@ const [place, setPlace] = useState("")
         'Content-Type': 'application/json',
       }
     }).then(response => {
-      const { location } = response.data
-      console.log(response.data)
-      // destruction location into an array then pass it to the useState
-      setLocation(location)
-      setPlace("")
+      const { location: {lat, lng} } = response.data
+      setLocation([lat, lng])
+      setLoading(false)
     }).catch(error => {
       const { message } = error.response.data
       console.log(message);
@@ -29,9 +29,15 @@ const [place, setPlace] = useState("")
   }, [])
 
   return (
-    <div className="container_body">
-      <RequestForm place={place} />
-      <RequestMap location={location} />
+    <div>
+      {loading ? 
+      <Shimmer width="100%" height="100vh" /> :
+      <div className="container_body">
+        <RequestForm />
+        <RequestMap location={location} />
+        <ParcelDetails />
+      </div>
+      }
     </div>
   );
 }

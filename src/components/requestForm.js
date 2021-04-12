@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
-const RequestForm = ({place}) => {
-    const [pickup, setPickup] = useState(place);
+const RequestForm = () => {
+    const [pickup, setPickup] = useState("");
     const [dropoff, setDropoff] = useState("")
     const [pickupcoordinate, setPickupcoordinate] = useState([]);
     const [dropoffcoordinate, setDropoffcoordinate] = useState([]);

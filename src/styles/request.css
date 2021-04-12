@@ -3,7 +3,6 @@
     padding: 0 0.5rem;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     margin-top: 10px;
 }
@@ -21,4 +20,12 @@
 .leaflet-container {
     width: auto;
     height: 80vh;
+}
+
+.cost_dist {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: center;
+    align-items: center;
+    max-width: 960px;
 }

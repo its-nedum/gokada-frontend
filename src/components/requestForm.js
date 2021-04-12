@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
-const RequestForm = () => {
-    const [pickup, setPickup] = useState("");
+const RequestForm = ({place}) => {
+    const [pickup, setPickup] = useState(place);
     const [dropoff, setDropoff] = useState("")
     const [pickupcoordinate, setPickupcoordinate] = useState([]);
     const [dropoffcoordinate, setDropoffcoordinate] = useState([]);
@@ -50,7 +50,7 @@ const RequestForm = () => {
                             <PlacesAutocomplete value={pickup} onChange={setPickup} onSelect={handlePickup}>
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div>
-                                    <input {...getInputProps()} type="text" className="form-control req_txtbox" placeholder="Pickup address" aria-label="pickup_address" />
+                                    <input {...getInputProps()} type="text" className="form-control req_txtbox" value={pickup} placeholder="Pickup address" aria-label="pickup_address" />
                                     <div className="autocomplete-dropdown mb-2 text-left pl-3">
                                         {loading ? <div>loading...</div> : null}
                                         {suggestions.map((suggestion, index) => {
@@ -61,7 +61,7 @@ const RequestForm = () => {
                                             };
                                             return <div {...getSuggestionItemProps(suggestion, { style })} key={index}>{suggestion.description}</div>
                                         })}
-                                    </div>eact
+                                    </div>
                                 </div>
                             )}   
                             </PlacesAutocomplete>
@@ -83,7 +83,7 @@ const RequestForm = () => {
                                             };
                                             return <div {...getSuggestionItemProps(suggestion, { style })} key={index}>{suggestion.description}</div>
                                         })}
-                                    </div>eact
+                                    </div>
                                 </div>
                             )}   
                             </PlacesAutocomplete>

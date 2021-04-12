@@ -6,7 +6,7 @@ const RequestMap = ({location}) => {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                <MapContainer center={location} zoom={10} scrollWheelZoom={true}>
+                <MapContainer center={location} zoom={13} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

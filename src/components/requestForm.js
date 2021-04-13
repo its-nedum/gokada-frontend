@@ -53,6 +53,7 @@ const RequestForm = ({currentLocation}) => {
         // show the user their current location
         setPickup(urLocation)
         setShowsuggestion(false)
+        console.log(urLocationLatLng)
     }
 
     useEffect(() => {

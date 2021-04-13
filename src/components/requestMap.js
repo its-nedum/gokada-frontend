@@ -1,7 +1,7 @@
 import React from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
-const RequestMap = ({location}) => {
+const RequestMap = ({location, dropoffcoordinate, pickupLocation}) => {
     return (
         <div className="container">
             <div className="row">
@@ -13,14 +13,16 @@ const RequestMap = ({location}) => {
                 />
                     <Marker position={location}>
                         <Popup>
-                        Your location
+                         {pickupLocation? "Pickup" : "Your location"}
                         </Popup>
                     </Marker>
-                    <Marker position={[9.1099, 7.4042]}>
+                    {dropoffcoordinate.length !== 0?
+                    <Marker position={dropoffcoordinate}>
                         <Popup>
-                        Your Dropoff
+                        Dropoff
                         </Popup>
                     </Marker>
+                    : null}
                 </MapContainer>
                 </div>
             </div>

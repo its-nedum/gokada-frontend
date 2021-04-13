@@ -92,7 +92,7 @@ const RequestForm = ({currentLocation}) => {
                                         })}
                                     </div>
                                     {showSuggestion? 
-                                    <div id="showUserCurrentLocation" onClick={(e) => handleUseMyLocation}>{urLocation}</div>
+                                    <div id="showUserCurrentLocation" onClick={(e) => handleUseMyLocation(e)}>{urLocation}</div>
                                     : null }
                                 </div>
                             )}   

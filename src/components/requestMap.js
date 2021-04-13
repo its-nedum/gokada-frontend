@@ -1,7 +1,12 @@
 import React from 'react'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet'
 
 const RequestMap = ({location, dropoffcoordinate, pickupLocation}) => {
+
+    // polyline parameters
+    const path = { color: 'red'};
+    const position = [location,dropoffcoordinate];
+
     return (
         <div className="container">
             <div className="row">
@@ -17,11 +22,14 @@ const RequestMap = ({location, dropoffcoordinate, pickupLocation}) => {
                         </Popup>
                     </Marker>
                     {dropoffcoordinate.length !== 0?
+                    <>
                     <Marker position={dropoffcoordinate}>
                         <Popup>
                         Dropoff
                         </Popup>
                     </Marker>
+                    <Polyline pathOptions={path} positions={position} />
+                    </>
                     : null}
                 </MapContainer>
                 </div>

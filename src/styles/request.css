@@ -30,3 +30,7 @@
     max-width: 960px;
     margin-top: 10px;
 }
+
+.showUserCurrentLocation {
+    cursor: pointer;
+}

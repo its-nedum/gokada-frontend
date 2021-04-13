@@ -20,6 +20,9 @@ const RequestForm = ({currentLocation}) => {
                 setPickupcoordinate([latlng.lat, latlng.lng])
             }).catch(error => console.log({'latlng': error}))
         }).catch(error => console.log({'geocodeError': error}))
+
+        // clear location suggestion
+        setShowsuggestion(false)
     }
 
     const handleDropoff = (value) => {
@@ -93,7 +96,7 @@ const RequestForm = ({currentLocation}) => {
                                         })}
                                     </div>
                                     {showSuggestion? 
-                                    <div id="showUserCurrentLocation" onClick={(e) => handleUseMyLocation(e)}>{urLocation}</div>
+                                    <div className="showUserCurrentLocation" onClick={(e) => handleUseMyLocation(e)}>{urLocation}</div>
                                     : null }
                                 </div>
                             )}   

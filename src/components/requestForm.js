@@ -39,6 +39,10 @@ const RequestForm = () => {
         }
     }
 
+    const handleFocus = () => {
+        console.log('Focused')
+    }
+
     return (
         <div className="container">
             <div className="row">

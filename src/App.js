@@ -31,7 +31,7 @@ const [loading, setLoading] = useState(true);
   return (
     <div>
       {loading ? 
-      <Shimmer width="100%" height="100vh" /> :
+      <Shimmer width={100} height={100} /> :
       <div className="container_body">
         <RequestForm />
         <RequestMap location={location} />

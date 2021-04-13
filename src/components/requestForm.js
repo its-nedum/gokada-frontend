@@ -1,11 +1,15 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import axios from 'axios'
 
-const RequestForm = () => {
+const RequestForm = ({currentLocation}) => {
+    const [urLocation, setUrlocation] = useState("");
+    const [urLocationLatLng, setUrLocationLatLng] = useState([])
     const [pickup, setPickup] = useState("");
     const [dropoff, setDropoff] = useState("")
     const [pickupcoordinate, setPickupcoordinate] = useState([]);
     const [dropoffcoordinate, setDropoffcoordinate] = useState([]);
+    const [showSuggestion, setShowsuggestion] = useState(false);
 
     const handlePickup = (value) => {
         geocodeByAddress(value)
@@ -39,9 +43,30 @@ const RequestForm = () => {
         }
     }
 
-    const handleFocus = () => {
-        console.log('Focused')
+    const handleFocus = (e) => {
+        e.preventDefault();
+        setShowsuggestion(true)
     }
+
+    const handleUseMyLocation = (e) => {
+        e.preventDefault();
+        // show the user their current location
+        setPickup(urLocation)
+        setShowsuggestion(false)
+    }
+
+    useEffect(() => {
+        axios(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentLocation[0]},${currentLocation[1]}&sensor=false&key=${process.env.REACT_APP_API_KEY}`)
+        .then(response => {
+            const { data: { results } } = response;
+            // get the user current address using geocode
+            setUrlocation(results[0].formatted_address);
+            // destruction the user lat and lng depending on the result from google api
+            const urLatlng = results[0].geometry.location;
+            setUrLocationLatLng([urLatlng.lat, urLatlng.lng])
+        })
+        .catch(error => console.log(error))
+    },[currentLocation])
 
     return (
         <div className="container">
@@ -54,7 +79,7 @@ const RequestForm = () => {
                             <PlacesAutocomplete value={pickup} onChange={setPickup} onSelect={handlePickup}>
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div>
-                                    <input {...getInputProps()} type="text" className="form-control req_txtbox" value={pickup} placeholder="Pickup address" aria-label="pickup_address" />
+                                    <input {...getInputProps()} type="text" onFocus={(e) => handleFocus(e)} className="form-control req_txtbox" value={pickup} placeholder="Pickup address" aria-label="pickup_address" />
                                     <div className="autocomplete-dropdown mb-2 text-left pl-3">
                                         {loading ? <div>loading...</div> : null}
                                         {suggestions.map((suggestion, index) => {
@@ -66,6 +91,9 @@ const RequestForm = () => {
                                             return <div {...getSuggestionItemProps(suggestion, { style })} key={index}>{suggestion.description}</div>
                                         })}
                                     </div>
+                                    {showSuggestion? 
+                                    <div id="showUserCurrentLocation" onClick={(e) => handleUseMyLocation}>{urLocation}</div>
+                                    : null }
                                 </div>
                             )}   
                             </PlacesAutocomplete>
